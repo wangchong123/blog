@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace = "com.wangchong.blog.dao.ArticleDao" >
+
+    <select id="queryList"  resultType="com.wangchong.blog.entity.Article" parameterType="Map">
+        SELECT * FROM article WHERE status = 1 
+        <if test="type != null and type != ' '"> AND type=#{type} </if>
+        ORDER BY scope DESC
+
+    </select>
+
+    <select id="getById"  resultType="com.wangchong.blog.entity.Article" parameterType="Long">
+        SELECT * FROM article WHERE id=#{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,42 @@
+article:
+  id,
+  title,
+  descript,
+  content,
+  status,
+  createtime,
+  scope,
+  opt1,点赞
+  opt2,评论
+  opt3,浏览,
+  opt4,踩，
+  type,分类
+
+
+comment
+  id,
+  articleId,
+  content,
+  createtime,
+  status,
+  reply,
+  replytime
+  customerName
+
+opt
+  id,
+  type,1 赞 2评论 3浏览 4踩
+  createtime,
+  articleId
+
+
+customer
+  id,
+  name,
+  createtime,
+  ip
+
+type
+  id,
+  name,
+  status,
