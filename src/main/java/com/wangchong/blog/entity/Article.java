@@ -13,6 +13,7 @@ public class Article implements Serializable{
     private String describe;
     private String content;
     private Integer status;
+    private String photo;
     private Integer opt1; //赞
     private Integer opt2; //评论
     private Integer opt3; //浏览
