@@ -13,6 +13,12 @@ public interface ArticleDao {
 
     Article getById(Long id);
 
+    boolean  addOpt1(Long id);
+
+    boolean  addOpt2(Long id);
+
+    boolean  addOpt3(Long id);
+
 
 
 

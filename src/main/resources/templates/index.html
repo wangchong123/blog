@@ -6,7 +6,7 @@
 <title>blog</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link href="/css/style.css" rel="stylesheet" type="text/css" />
-
+<script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
 <!--<script type="text/javascript" th:src="@{/js/cufon-yui.js}"></script>-->
 <!--<script type="text/javascript" th:src="@{/js/arial.js}"></script>-->
 <!--<script type="text/javascript" th:src="@{/js/cuf_run.js}"></script>-->
@@ -127,3 +127,21 @@
 </div>
 </body>
 </html>
+
+<script>
+  $(document).ready(function(){
+      $.ajax({
+          url:"/article/addOpt3.do",
+          dataType:"json",
+          type:"post",
+          data:{
+              id:1
+          },
+          success:function(data){
+              console.log(data.ip)
+
+          }
+      })
+  })
+
+</script>

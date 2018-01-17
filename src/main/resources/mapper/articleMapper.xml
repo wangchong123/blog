@@ -15,4 +15,16 @@
         SELECT * FROM article WHERE id=#{id}
     </select>
 
+    <update id="addOpt1" parameterType="Long">
+        UPDATE article SET opt1 = opt1+1 WHERE id=#{id};
+    </update>
+
+    <update id="addOpt2" parameterType="Long">
+        UPDATE article SET opt2 = opt2+1 WHERE id=#{id};
+    </update>
+
+    <update id="addOpt3" parameterType="Long">
+        UPDATE article SET opt3 = opt3+1 WHERE id=#{id};
+    </update>
+
 </mapper>
