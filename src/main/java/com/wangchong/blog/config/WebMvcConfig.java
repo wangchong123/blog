@@ -7,6 +7,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+    /**
+     * 跳转配置
+     * @param registry
+     */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
        registry.addViewController("/toLogin.do").setViewName("/login");

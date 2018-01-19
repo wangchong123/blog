@@ -27,4 +27,9 @@
         UPDATE article SET opt3 = opt3+1 WHERE id=#{id};
     </update>
 
+    <insert id="insert" parameterType="com.wangchong.blog.entity.Article">
+        INSERT INTO (title,describe,content,status,scope,opt1,opt2,opt3,opt4,createtime,type,photo)
+        VALUES (#{title},#{describe},#{content},#{status},#{scope},#{opt1},#{opt2},#{opt3},#{opt4},#{createtime},#{type},#{photo})
+    </insert>
+
 </mapper>

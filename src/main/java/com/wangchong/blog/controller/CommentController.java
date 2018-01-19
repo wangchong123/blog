@@ -17,6 +17,14 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
+    /**
+     * 评论
+     * @param request
+     * @param content
+     * @param articleId
+     * @param customerName
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/comment.do")
     public Map<String,Object> comment(HttpServletRequest request,String content,Long articleId,String customerName){
@@ -26,6 +34,12 @@ public class CommentController {
         return map;
     }
 
+    /**
+     * 回复评论
+     * @param request
+     * @param reply
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/replyComment.do")
     public Map<String,Object> replyComment(HttpServletRequest request,String reply){

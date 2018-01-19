@@ -10,4 +10,5 @@ public class Type implements Serializable {
     private Long id;
     private String name;
     private Integer status;
+    private Integer scope;
 }

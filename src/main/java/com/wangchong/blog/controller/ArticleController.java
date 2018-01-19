@@ -23,16 +23,32 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
 
+    /**
+     * 主页
+     * @param request
+     * @param type
+     * @param currPage
+     * @param pageSize
+     * @return
+     */
     @RequestMapping("/index.do")
     public ModelAndView index(HttpServletRequest request,
-            @RequestParam(value = "type",required = false) Long type){
+                              @RequestParam(value = "type", required = false) Long type,
+                              @RequestParam(value = "currPage", required = false,defaultValue = "1") Integer currPage,
+                              @RequestParam(value = "pageSize", required = false,defaultValue = "10") Integer pageSize) {
         ModelAndView mav = new ModelAndView();
-        List<Article> articleList = articleService.queryArticleList(type);
-        mav.addObject("articleList",articleList);
+        List<Article> articleList = articleService.queryArticleList(type,currPage,pageSize);
+        mav.addObject("articleList", articleList);
         mav.setViewName("/index");
         return mav;
     }
 
+    /**
+     * 文章详情
+     * @param request
+     * @param id
+     * @return
+     */
     @RequestMapping("/articleDetail.do")
     public ModelAndView articleDetail(HttpServletRequest request,
                               @RequestParam(value = "id",required = true) Long id){
@@ -43,6 +59,12 @@ public class ArticleController {
         return mav;
     }
 
+    /**
+     * 浏览量记录
+     * @param request
+     * @param id
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/addOpt3.do")
     public Map<String,Object> opt3(HttpServletRequest request,
@@ -50,9 +72,20 @@ public class ArticleController {
         Map<String,Object> map = new HashMap<>();
         String ip = CommonUtil.getIpAddr(request);
         articleService.updateOpt(id, ConstantUtil.OPT3);
-        System.out.println(ip);
         map.put("ip",ip);
         return map;
-
     }
+
+    @ResponseBody
+    @RequestMapping("/createArticle.do")
+    public Map<String,Object> createArticle(HttpServletRequest request,String title,String describe,String content,
+                                            Integer status,Integer type,Integer scope,String photo){
+        Map<String,Object> map = new HashMap<>();
+        boolean result = articleService.createArticle(title,describe,content,type,scope,status,photo);
+        map.put("result",result);
+        return map;
+    }
+
+
+
 }

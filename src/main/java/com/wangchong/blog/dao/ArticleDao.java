@@ -19,6 +19,8 @@ public interface ArticleDao {
 
     boolean  addOpt3(Long id);
 
+    boolean insert(Article obj);
+
 
 
 

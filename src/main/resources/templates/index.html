@@ -53,7 +53,7 @@
           <p>发布时间：<span th:text="${a.createtime}"></span> 作者：admin <a href="#"> 浏览 <span th:text="${a.opt3}"></span></a>  <a href="#"> 评论 <span th:text="${a.opt2}"></span></a></p>
           <img th:src="${a.photo}" src="/images/img_1.jpg" width="613" height="193" alt="image" />
           <div class="clr"></div>
-          <p th:text="${a.describe}"> </p>
+          <p th:utext="${a.content}"> </p>
           <p><a href="#">>>阅读全文 </a></p>
         </div>
       </div>

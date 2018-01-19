@@ -14,6 +14,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 后台登录
+     * @param username
+     * @param password
+     * @return
+     */
     @RequestMapping("/login.do")
     public ModelAndView Login(@RequestParam(value = "username",required = true) String username,
                               @RequestParam(value = "password",required = true) String password){
@@ -21,7 +27,7 @@ public class UserController {
         User user = userService.login(username,password);
         if(user != null){
             mav.addObject("user",user);
-            mav.setViewName("index");
+            mav.setViewName("admin/main");
         }else{
             mav.setViewName("login");
         }
