@@ -1,6 +1,7 @@
 package com.wangchong.blog.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
@@ -15,5 +16,10 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
     public void addViewControllers(ViewControllerRegistry registry) {
        registry.addViewController("/toLogin.do").setViewName("/login");
        //registry.addViewController("/index.do").setViewName("/index");
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+       registry.addInterceptor(new LoginCheckInterceptor()).addPathPatterns("/**");
     }
 }

@@ -1,5 +1,6 @@
 package com.wangchong.blog.controller;
 
+import com.wangchong.blog.annotation.LoginCheck;
 import com.wangchong.blog.entity.Article;
 import com.wangchong.blog.service.ArticleService;
 import com.wangchong.blog.util.CommonUtil;
@@ -31,6 +32,7 @@ public class ArticleController {
      * @param pageSize
      * @return
      */
+    @LoginCheck
     @RequestMapping("/index.do")
     public ModelAndView index(HttpServletRequest request,
                               @RequestParam(value = "type", required = false) Long type,
