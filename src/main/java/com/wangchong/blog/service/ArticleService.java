@@ -27,6 +27,11 @@ public class ArticleService {
         return articleDao.queryList(map);
     }
 
+    public List<Article> queryArticleList(){
+        Map<String,Object> map = new HashMap<>();
+        return articleDao.queryList(map);
+    }
+
     public Article getArticle(Long id){
         if(id != null){
             return articleDao.getById(id);
