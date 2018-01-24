@@ -141,16 +141,22 @@ public class LuceneUtil {
             Highlighter highlighter = new Highlighter(formatter,scorer);
             highlighter.setTextFragmenter(fragmenter);//设置要显示的片段
             TopDocs docs = searcher.search(query,10);
+            List<Article> list = new ArrayList<>();
+            Article obj;
             for (ScoreDoc score:docs.scoreDocs){
+                obj = new Article();
                 Document document = searcher.doc(score.doc);
                 String title = document.get("title");
                 System.out.println(document.get("id"));
                 //显示高亮部分
                 if(title != null){
                     TokenStream tokenStream = analyzer.tokenStream("title",new StringReader(title));
-                    String htitle = highlighter.getBestFragment(tokenStream,title);
-                    System.out.println(htitle);
+                    title = highlighter.getBestFragment(tokenStream,title);
+                    System.out.println(title);
                 }
+                obj.setId(Long.valueOf(document.get("id")));
+                obj.setTitle(title);
+               // obj.setDescribe();
             }
         }catch (Exception e){
 
