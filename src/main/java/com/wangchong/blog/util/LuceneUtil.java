@@ -2,11 +2,9 @@ package com.wangchong.blog.util;
 
 import com.wangchong.blog.entity.Article;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.document.Field;
-import org.apache.lucene.document.LongField;
-import org.apache.lucene.document.TextField;
+import org.apache.lucene.document.*;
 import org.apache.lucene.index.*;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -14,10 +12,12 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 import java.io.File;
+import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -134,11 +134,23 @@ public class LuceneUtil {
             //从多个fields中查找
             QueryParser parser = new MultiFieldQueryParser(FIELDS,analyzer);
             Query query = parser.parse(source);
+            //高亮显示
+            SimpleHTMLFormatter formatter = new SimpleHTMLFormatter("<b><font color=red>","</font></b>");
+            QueryScorer scorer = new QueryScorer(query);//计算得分
+            Fragmenter fragmenter = new SimpleSpanFragmenter(scorer);//根据得分计算片段
+            Highlighter highlighter = new Highlighter(formatter,scorer);
+            highlighter.setTextFragmenter(fragmenter);//设置要显示的片段
             TopDocs docs = searcher.search(query,10);
             for (ScoreDoc score:docs.scoreDocs){
                 Document document = searcher.doc(score.doc);
-                System.out.println(document.get("title"));
+                String title = document.get("title");
                 System.out.println(document.get("id"));
+                //显示高亮部分
+                if(title != null){
+                    TokenStream tokenStream = analyzer.tokenStream("title",new StringReader(title));
+                    String htitle = highlighter.getBestFragment(tokenStream,title);
+                    System.out.println(htitle);
+                }
             }
         }catch (Exception e){
 
@@ -154,10 +166,10 @@ public class LuceneUtil {
                 IndexWriterConfig config = new IndexWriterConfig(analyzer);
                 IndexWriter writer = new IndexWriter(directory,config);
                 //试了下 至少要写出下面中的三个term才能删除，只写一个id不行，原因未知。。。
-                writer.deleteDocuments(new Term("id","10"));
-                writer.deleteDocuments(new Term("title","标题2"));
+                writer.deleteDocuments(new Term("key","10"));
+               /* writer.deleteDocuments(new Term("title","标题2"));
                 writer.deleteDocuments(new Term("describe","描述"));
-                writer.deleteDocuments(new Term("content","内容"));
+                writer.deleteDocuments(new Term("content","内容"));*/
                 writer.close();
                 directory.close();
             } catch (Exception e) {
@@ -172,9 +184,9 @@ public class LuceneUtil {
        a.setDescribe("描述");
        a.setContent("内容");
        a.setId(10l);
-      // createIndex(a);
+       //createIndex(a);
        search("标题");
       // updateIndex(a);
-        //deleteIndex();
+       // deleteIndex();
     }
 }

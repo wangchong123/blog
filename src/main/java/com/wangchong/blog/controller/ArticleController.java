@@ -1,5 +1,7 @@
 package com.wangchong.blog.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.wangchong.blog.annotation.LoginCheck;
 import com.wangchong.blog.entity.Article;
 import com.wangchong.blog.service.ArticleService;
@@ -41,8 +43,9 @@ public class ArticleController {
                               @RequestParam(value = "pageSize", required = false,defaultValue = "10") Integer pageSize) {
         ModelAndView mav = new ModelAndView();
         List<Article> articleList = articleService.queryArticleList(type,currPage,pageSize);
-        LuceneUtil.createIndex(articleList);
+        PageInfo<Article> page = new PageInfo<Article>(articleList);
         mav.addObject("articleList", articleList);
+        mav.addObject("page",page);
         mav.setViewName("/index");
         return mav;
     }
@@ -59,7 +62,7 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView();
         Article article = articleService.getArticle(id);
         mav.addObject("article",article);
-        mav.setViewName("/articleDetail");
+        mav.setViewName("/article");
         return mav;
     }
 

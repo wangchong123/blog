@@ -5,123 +5,70 @@
 <head>
 <title>blog</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link href="/css/style.css" rel="stylesheet" type="text/css" />
+<link href="/css/bootstrap.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" th:src="@{/js/jquery-3.2.1.min.js}"></script>
-<!--<script type="text/javascript" th:src="@{/js/cufon-yui.js}"></script>-->
-<!--<script type="text/javascript" th:src="@{/js/arial.js}"></script>-->
-<!--<script type="text/javascript" th:src="@{/js/cuf_run.js}"></script>-->
-<!-- CuFon ends -->
+<script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
 </head>
 <body>
-<div class="main">
-  <div class="header">
-    <div class="header_resize">
-      <div class="logo">
-        <h1><a href="index.html">Link <span> Line</span></a><small>Simple web template</small></h1>
-      </div>
-      <div class="clr"></div>
-      <div class="menu_nav">
-        <ul>
-          <li class="active"><a href="index.html">Home</a></li>
-          <li><a href="support.html">Support</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="blog.html">Blog</a></li>
-          <li><a href="contact.html">Contact Us</a></li>
-        </ul>
-       <div class="search">
-        <form id="form" name="form" method="post" action="">
-          <span>
-          <input name="q" type="text" class="keywords" id="textfield" maxlength="50" value="Search..." />
-          
-          <input name="b" type="image" src="/images/search.gif" class="button" />
-          </span>
-        </form>
-      </div>
-      <!--/search -->
-      </div>
-      <div class="clr"></div>
-    </div>
+<div class="container">
+  <div class="row clearfix" th:include="header :: header">
   </div>
-  <div class="clr"></div>
-  <div class="content">
-    <div class="content_resize">
-      <div class="mainbar" th:each="a:${articleList}">
+  <div class="row clearfix">
+    <div class="col-md-9 column">
 
-        <div class="article">
-          <h2><span th:text="${a.title}"></span></h2>
-          <div class="clr"></div>
-          <p>发布时间：<span th:text="${a.createtime}"></span> 作者：admin <a href="#"> 浏览 <span th:text="${a.opt3}"></span></a>  <a href="#"> 评论 <span th:text="${a.opt2}"></span></a></p>
-          <img th:src="${a.photo}" src="/images/img_1.jpg" width="613" height="193" alt="image" />
-          <div class="clr"></div>
-          <p th:utext="${a.content}"> </p>
-          <p><a href="#">>>阅读全文 </a></p>
-        </div>
+      <div class = "content" th:each="a:${articleList}">
+      <h2 th:text="${a.title}">
+      </h2>
+      <p th:text="${a.describe}">
+      </p>
+      <p>
+        <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}">阅读全文 »</a>
+      </p>
       </div>
-     <!-- <div class="article" style="padding:5px 20px 2px 20px; background:none; border:0;">
-        <p>Page 1 of 2 <span class="butons"><a href="#">3</a><a href="#">2</a> <a href="#" class="active">1</a></span></p>
-      </div>-->
-      <div class="sidebar">
-        <div class="gadget">
-          <h2>Sidebar Menu</h2>
-          <div class="clr"></div>
-          <ul class="sb_menu">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">TemplateInfo</a></li>
-            <li><a href="#">Style Demo</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Archives</a></li>
-            <li><a href="#" title="Website Templates">Web Templates</a></li>
-          </ul>
-        </div>
-        <div class="gadget">
-          <h2><span>Sponsors</span></h2>
-          <div class="clr"></div>
-          <ul class="ex_menu">
-            <li><a href="#" title="Website Templates">DreamTemplate</a><br />
-              Over 6,000+ Premium Web Templates</li>
-            <li><a href="http://www.templatesold.com" title="WordPress Themes">TemplateSOLD</a><br />
-              Premium WordPress &amp; Joomla Themes</li>
-            <li><a href="#" title="Affordable Hosting">ImHosted.com</a><br />
-              Affordable Web Hosting Provider</li>
-            <li><a href="#" title="Stock Icons">MyVectorStore</a><br />
-              Royalty Free Stock Icons</li>
-            <li><a href="#" title="Website Builder">Evrsoft</a><br />
-              Website Builder Software &amp; Tools</li>
-            <li><a href="#" title="CSS Templates">CSS Hub</a><br />
-              Premium CSS Templates</li>
-          </ul>
-        </div>
-        <div class="gadget">
-          <h2>Wise Words</h2>
-          <div class="clr"></div>
-          <p>   <img src="/images/test_1.gif" alt="image" width="20" height="18" /> <em>We can let circumstances rule us, or we can take charge and rule our lives from within </em>.<img src="/images/test_2.gif" alt="image" width="20" height="18" /></p>
-          <p style="float:right;"><strong>Earl Nightingale</strong></p>
-          </div>
-      </div>
-      <div class="clr"></div>
+
+
+      <ul class="pagination">
+        <li>
+          <a th:href="@{/article/index.do(currPage=1)}">首页</a>
+        </li>
+        <li>
+          <a th:href="@{/article/index.do(currPage=${page.prePage})}">上一页</a>
+        </li>
+        <li>
+          <a th:href="@{/article/index.do(currPage=${page.nextPage})}">下一页</a>
+        </li>
+        <li>
+          <a th:href="@{/article/index.do(currPage=${page.lastPage})}">末页</a>
+        </li>
+      </ul>
     </div>
-  </div>
-  <div class="fbg">
-    <div class="fbg_resize">
-      <div class="col c1">
-        <h2><span>Image Gallery</span></h2>
-        <a href="#"><img src="/images/gallery_1.jpg" width="58" height="58" alt="pix" /></a> <a href="#"><img src="/images/gallery_2.jpg" width="58" height="58" alt="pix" /></a> <a href="#"><img src="/images/gallery_3.jpg" width="58" height="58" alt="pix" /></a> <a href="#"><img src="/images/gallery_4.jpg" width="58" height="58" alt="pix" /></a> <a href="#"><img src="/images/gallery_5.jpg" width="58" height="58" alt="pix" /></a> <a href="#"><img src="/images/gallery_6.jpg" width="58" height="58" alt="pix" /></a> </div>
-      <div class="col c2">
-        <h2><span>Lorem Ipsum</span></h2>
-        <p>Lorem ipsum dolor<br />
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec libero. Suspendisse bibendum. Cras id urna. Morbi tincidunt, orci ac convallis aliquam, lectus turpis varius lorem, eu posuere nunc justo tempus leo. Donec mattis, purus nec placerat bibendum, dui pede condimentum odio, ac blandit ante orci ut diam.</p>
-      </div>
-      <div class="col c3">
-        <h2><span>Contact</span></h2>
-        <p>Nullam quam lorem, tristique non vestibulum nec, consectetur in risus. Aliquam a quam vel leo gravida gravida eu porttitor dui. Nulla pharetra, mauris vitae interdum dignissim, justo nunc suscipit ipsum. <a href="#">mail@example.com</a><br />
-          <a href="#">+1 (123) 444-5677</a></p>
-      </div>
-      <div class="clr"></div>
-    </div>
-    <div class="footer">
-      <p class="lr">© Copyright <a href="#">MyWebSite</a>.</p>
-      <p class="lf"><a href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a></p>
-      <div class="clr"></div>
+    <div class="col-md-3 column">
+      <ul>
+        <li>
+          Lorem ipsum dolor sit amet
+        </li>
+        <li>
+          Consectetur adipiscing elit
+        </li>
+        <li>
+          Integer molestie lorem at massa
+        </li>
+        <li>
+          Facilisis in pretium nisl aliquet
+        </li>
+        <li>
+          Nulla volutpat aliquam velit
+        </li>
+        <li>
+          Faucibus porta lacus fringilla vel
+        </li>
+        <li>
+          Aenean sit amet erat nunc
+        </li>
+        <li>
+          Eget porttitor lorem
+        </li>
+      </ul>
     </div>
   </div>
 </div>
