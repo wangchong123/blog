@@ -15,11 +15,13 @@ import java.lang.reflect.Method;
 public class LoginCheckInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
+        //不是方法直接跳过
         if(!(o instanceof HandlerMethod)){
             return true;
         }
         HandlerMethod handler = (HandlerMethod) o;
         Method method = handler.getMethod();
+        //方法上是否有LoginCheck注解
         LoginCheck loginCheck = method.getAnnotation(LoginCheck.class);
         if(loginCheck != null){
             User user=(User) request.getSession().getAttribute("user");

@@ -125,7 +125,7 @@ public class LuceneUtil {
      * 查询
      * @param source
      */
-    public static void search(String source){
+    public static List<Article> search(String source){
         try {
             Directory directory = FSDirectory.open(Paths.get(PATH));
             IndexReader reader = DirectoryReader.open(directory);
@@ -147,6 +147,7 @@ public class LuceneUtil {
                 obj = new Article();
                 Document document = searcher.doc(score.doc);
                 String title = document.get("title");
+                String describe = document.get("describe");
                 System.out.println(document.get("id"));
                 //显示高亮部分
                 if(title != null){
@@ -154,13 +155,22 @@ public class LuceneUtil {
                     title = highlighter.getBestFragment(tokenStream,title);
                     System.out.println(title);
                 }
+                if(describe != null){
+                    TokenStream tokenStream = analyzer.tokenStream("describe",new StringReader(describe));
+                    title = highlighter.getBestFragment(tokenStream,describe);
+                    System.out.println(describe);
+                }
                 obj.setId(Long.valueOf(document.get("id")));
                 obj.setTitle(title);
-               // obj.setDescribe();
+                obj.setDescribe(describe);
+                list.add(obj);
             }
+            return list;
         }catch (Exception e){
+            e.printStackTrace();
 
         }
+        return null;
     }
 
     public static void updateIndex(Article article){

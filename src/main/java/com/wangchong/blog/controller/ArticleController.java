@@ -114,6 +114,15 @@ public class ArticleController {
     }
 
 
+    public ModelAndView search(HttpServletRequest request,String source){
+        ModelAndView mav = new ModelAndView();
+        List<Article> list = LuceneUtil.search(source);
+        mav.addObject("list",list);
+        return mav;
+
+    }
+
+
 
 
 
