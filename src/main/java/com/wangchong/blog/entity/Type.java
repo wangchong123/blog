@@ -11,4 +11,6 @@ public class Type implements Serializable {
     private String name;
     private Integer status;
     private Integer scope;
+
+    private Integer count;
 }

@@ -1,6 +1,7 @@
 package com.wangchong.blog.util;
 
 import com.wangchong.blog.entity.Article;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
@@ -148,17 +149,20 @@ public class LuceneUtil {
                 Document document = searcher.doc(score.doc);
                 String title = document.get("title");
                 String describe = document.get("describe");
-                System.out.println(document.get("id"));
                 //显示高亮部分
-                if(title != null){
+                if(StringUtils.isNotBlank(title)){
                     TokenStream tokenStream = analyzer.tokenStream("title",new StringReader(title));
                     title = highlighter.getBestFragment(tokenStream,title);
-                    System.out.println(title);
+                    if(title == null){
+                        title = document.get("title");
+                    }
                 }
-                if(describe != null){
+                if(StringUtils.isNotBlank(describe)){
                     TokenStream tokenStream = analyzer.tokenStream("describe",new StringReader(describe));
-                    title = highlighter.getBestFragment(tokenStream,describe);
-                    System.out.println(describe);
+                    describe = highlighter.getBestFragment(tokenStream,describe);
+                    if(describe == null){
+                        describe = document.get("describe");
+                    }
                 }
                 obj.setId(Long.valueOf(document.get("id")));
                 obj.setTitle(title);

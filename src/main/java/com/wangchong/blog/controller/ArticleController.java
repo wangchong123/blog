@@ -114,11 +114,23 @@ public class ArticleController {
     }
 
 
+    @RequestMapping("/search.do")
     public ModelAndView search(HttpServletRequest request,String source){
         ModelAndView mav = new ModelAndView();
         List<Article> list = LuceneUtil.search(source);
         mav.addObject("list",list);
+        mav.addObject("source",source);
+        mav.setViewName("/search");
         return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryRank.do")
+    public Map<String,Object> queryRank(){
+        Map<String,Object> map = new HashMap<>();
+        List<Article> list = articleService.queryRank();
+        map.put("list",list);
+        return map;
 
     }
 

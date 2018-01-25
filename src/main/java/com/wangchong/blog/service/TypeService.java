@@ -46,6 +46,8 @@ public class TypeService {
     }
 
     public List<Type> queryTypeList(){
-        return typeDao.queryList();
+        return typeDao.queryTypeNums();
     }
+
+
 }

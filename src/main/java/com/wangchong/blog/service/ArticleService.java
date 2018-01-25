@@ -67,4 +67,8 @@ public class ArticleService {
         article.setTitle(title);
         return articleDao.insert(article);
     }
+
+    public List<Article> queryRank(){
+        return articleDao.queryRank();
+    }
 }

@@ -1,4 +1,5 @@
 <!DOCTYPE html >
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -11,16 +12,15 @@
 </head>
 <body>
 <div class="container">
-  <div class="row clearfix" th:include="header ::header">
-
+  <div class="row clearfix" th:include="header :: header">
   </div>
   <div class="row clearfix">
     <div class="col-md-9 column">
 
-      <div class = "content" th:each="a:${articleList}">
-      <h4 th:text="${a.title}" >
+      <div class = "content" th:each="a:${list}">
+      <h4 th:utext="${a.title}">
       </h4>
-      <p th:text="${a.describe}">
+      <p th:utext="${a.describe}">
       </p>
       <p>
         <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}">阅读全文 »</a>
@@ -28,7 +28,7 @@
       </div>
 
 
-      <ul class="pagination">
+     <!-- <ul class="pagination">
         <li>
           <a th:href="@{/article/index.do(currPage=1)}">首页</a>
         </li>
@@ -41,7 +41,7 @@
         <li>
           <a th:href="@{/article/index.do(currPage=${page.lastPage})}">末页</a>
         </li>
-      </ul>
+      </ul>-->
     </div>
     <div class="col-md-3 column" th:include="right :: right"></div>
   </div>
@@ -64,6 +64,5 @@
           }
       })
   })
-
 
 </script>

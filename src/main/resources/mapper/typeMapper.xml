@@ -5,7 +5,13 @@
 <mapper namespace = "com.wangchong.blog.dao.TypeDao" >
 
     <select id="queryList"  resultType="com.wangchong.blog.entity.Type">
-        SELECT * FROM type ORDER BY scope DESC
+        SELECT * FROM type WHERE status=1 ORDER BY scope DESC
+    </select>
+
+    <select id="queryTypeNums"  resultType="com.wangchong.blog.entity.Type">
+        SELECT t.id AS id,t.name AS name,a.count AS count FROM type t,
+        (SELECT count(1) AS count,type AS type FROM article WHERE status=1 GROUP BY  type) a
+        WHERE a.type = t.id;
     </select>
 
     <insert id="insert" parameterType="com.wangchong.blog.entity.Type">

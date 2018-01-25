@@ -18,4 +18,6 @@ public interface TypeDao {
     Type getById(Long id);
 
     List<Type> queryList();
+
+    List<Type> queryTypeNums();
 }

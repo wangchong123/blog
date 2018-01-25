@@ -21,6 +21,8 @@ public interface ArticleDao {
 
     boolean insert(Article obj);
 
+    List<Article> queryRank();
+
 
 
 

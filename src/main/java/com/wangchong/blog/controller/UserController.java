@@ -34,7 +34,7 @@ public class UserController {
         if(user != null){
             request.getSession().setAttribute("user",user);
             mav.addObject("user",user);
-            mav.setViewName("admin/main");
+            mav.setViewName("admin/index");
         }else{
             mav.setViewName("login");
         }
