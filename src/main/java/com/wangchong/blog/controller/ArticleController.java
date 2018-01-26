@@ -131,7 +131,15 @@ public class ArticleController {
         List<Article> list = articleService.queryRank();
         map.put("list",list);
         return map;
+    }
 
+    @ResponseBody
+    @RequestMapping("/ajaxQueryList.do")
+    public Map<String,Object> ajaxQueryList(){
+        List<Article> list = articleService.queryArticleList();
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",list);
+        return map;
     }
 
 
