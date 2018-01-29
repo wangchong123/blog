@@ -13,7 +13,7 @@ function createIndex(){
 //渲染文章分类
 function renderType(){
     $.ajax({
-        url:"/type/typeList.do",
+        url:"/type/queryTypeNums.do",
         type:"post",
         dateType:"json",
         success:function(data){

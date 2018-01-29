@@ -4,7 +4,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wangchong.blog.annotation.LoginCheck;
 import com.wangchong.blog.entity.Article;
+import com.wangchong.blog.entity.Type;
 import com.wangchong.blog.service.ArticleService;
+import com.wangchong.blog.service.TypeService;
 import com.wangchong.blog.util.CommonUtil;
 import com.wangchong.blog.util.ConstantUtil;
 import com.wangchong.blog.util.LuceneUtil;
@@ -26,6 +28,8 @@ public class ArticleController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private TypeService typeService;
 
     /**
      * 主页
@@ -83,17 +87,28 @@ public class ArticleController {
         return map;
     }
 
-    @ResponseBody
     @RequestMapping("/createArticle.do")
-    public Map<String,Object> createArticle(HttpServletRequest request,String title,String describe,String content,
-                                            Integer status,Integer type,Integer scope,String photo){
-        Map<String,Object> map = new HashMap<>();
+    public ModelAndView createArticle(HttpServletRequest request,String title,String describe,String content,
+                                            Integer status,Long type,Integer scope,String photo){
+        ModelAndView mav = new ModelAndView();
         boolean result = articleService.createArticle(title,describe,content,type,scope,status,photo);
-        if(result){
+       /* if(result){
             LuceneUtil.createIndex(new Article());
-        }
-        map.put("result",result);
-        return map;
+        }*/
+        mav.setViewName("/admin/article");
+        return mav;
+    }
+
+    @RequestMapping("/updateArticle.do")
+    public ModelAndView updateArticle(HttpServletRequest request,String title,String describe,String content,
+                                      Long id,Long type,Integer scope,String photo){
+        ModelAndView mav = new ModelAndView();
+        boolean result = articleService.updateArticle(id,title,describe,content,type,scope,photo);
+       /* if(result){
+            LuceneUtil.createIndex(new Article());
+        }*/
+        mav.setViewName("/admin/article");
+        return mav;
     }
 
     /**
@@ -139,6 +154,24 @@ public class ArticleController {
         List<Article> list = articleService.queryArticleList();
         Map<String,Object> map = new HashMap<>();
         map.put("data",list);
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/ajaxGetArticle.do")
+    public Map<String,Object> ajaxGetArticle(Long id){
+        Article article = articleService.getArticle(id);
+        Map<String,Object> map = new HashMap<>();
+        map.put("data",article);
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/ajaxDeleteArticle.do")
+    public Map<String,Object> ajaxDeleteArticle(Long id){
+        Map<String,Object> map = new HashMap<>();
+        boolean result = articleService.deleteArticle(id);
+        map.put("result",result);
         return map;
     }
 

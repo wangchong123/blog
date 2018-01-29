@@ -5,7 +5,7 @@
 <mapper namespace = "com.wangchong.blog.dao.TypeDao" >
 
     <select id="queryList"  resultType="com.wangchong.blog.entity.Type">
-        SELECT * FROM type WHERE status=1 ORDER BY scope DESC
+        SELECT * FROM type WHERE status=1
     </select>
 
     <select id="queryTypeNums"  resultType="com.wangchong.blog.entity.Type">

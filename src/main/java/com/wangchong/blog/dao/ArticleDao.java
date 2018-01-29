@@ -23,6 +23,10 @@ public interface ArticleDao {
 
     List<Article> queryRank();
 
+    boolean updateStatus(Long id,Integer status);
+
+    boolean update(Map<String,Object> map);
+
 
 
 

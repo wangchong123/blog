@@ -21,6 +21,15 @@ public class TypeController {
 
     @ResponseBody
     @RequestMapping("/typeList.do")
+    public Map<String,Object> queryTypeList(HttpServletRequest request){
+        Map<String,Object> map = new HashMap<>();
+        List<Type> list = typeService.listType();
+        map.put("list",list);
+        return map;
+    }
+
+    @ResponseBody
+    @RequestMapping("/queryTypeNums.do")
     public Map<String,Object> queryTypeNums(HttpServletRequest request){
         Map<String,Object> map = new HashMap<>();
         List<Type> list = typeService.queryTypeList();

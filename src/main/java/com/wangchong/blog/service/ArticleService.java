@@ -51,7 +51,7 @@ public class ArticleService {
         }
     }
 
-    public boolean createArticle(String title,String describe,String content,Integer type,Integer scope,Integer status,
+    public boolean createArticle(String title,String describe,String content,Long type,Integer scope,Integer status,
                                  String photo){
         Article article = new Article();
         article.setContent(content);
@@ -65,10 +65,30 @@ public class ArticleService {
         article.setScope(scope);
         article.setStatus(status);
         article.setTitle(title);
+        article.setType(type);
         return articleDao.insert(article);
     }
 
     public List<Article> queryRank(){
         return articleDao.queryRank();
+    }
+
+    public boolean deleteArticle(Long id){
+        if(id != null){
+            return articleDao.updateStatus(id,-1);
+        }
+        return false;
+    }
+
+    public boolean updateArticle(Long id,String title,String describe,String content,Long type,Integer scope,
+                                 String photo){
+        Map<String,Object> map = new HashMap<>();
+        map.put("id",id);
+        map.put("title",title);
+        map.put("describe",describe);
+        map.put("content",content);
+        map.put("type",type);
+        map.put("scope",scope);
+        return articleDao.update(map);
     }
 }
