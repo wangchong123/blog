@@ -13,19 +13,27 @@ public interface ArticleDao {
 
     Article getById(Long id);
 
+    boolean update(Map<String,Object> map);
+
+    Long insert(Article obj);
+
+    boolean updateStatus(Long id,Integer status);
+
     boolean  addOpt1(Long id);
 
     boolean  addOpt2(Long id);
 
     boolean  addOpt3(Long id);
 
-    boolean insert(Article obj);
+    /**
+     * 根据浏览量倒序查询
+     * @return
+     */
+    List<Article> queryRankByOpt3();
 
-    List<Article> queryRank();
 
-    boolean updateStatus(Long id,Integer status);
 
-    boolean update(Map<String,Object> map);
+
 
 
 

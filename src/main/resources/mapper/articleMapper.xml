@@ -27,12 +27,12 @@
         UPDATE article SET opt3 = opt3+1 WHERE id=#{id};
     </update>
 
-    <insert id="insert" parameterType="com.wangchong.blog.entity.Article">
+    <insert id="insert" parameterType="com.wangchong.blog.entity.Article" keyProperty="id" useGeneratedKeys="true">
         INSERT INTO article (title,`describe`,content,`status`,scope,createtime,`type`,photo)
         VALUES (#{title},#{describe},#{content},#{status},#{scope},#{createtime},#{type},#{photo})
     </insert>
 
-    <select id="queryRank" resultType="com.wangchong.blog.entity.Article">
+    <select id="queryRankByOpt3" resultType="com.wangchong.blog.entity.Article">
         SELECT * FROM article WHERE status = 1 ORDER BY opt3 DESC limit 8
     </select>
     
@@ -41,7 +41,7 @@
     </update>
 
     <update id="update" parameterType="Map" >
-        UPDATE article SET id=#{id}
+        UPDATE articles SET id=#{id}
         <if test="title!=null">
             ,`title`=#{title}
         </if>

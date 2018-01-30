@@ -28,7 +28,7 @@ function renderType(){
 
 function renderRank(){
     $.ajax({
-        url:"/article/queryRank.do",
+        url:"/article/queryRankByOpt3.do",
         type:"post",
         dateType:"json",
         success:function(data){

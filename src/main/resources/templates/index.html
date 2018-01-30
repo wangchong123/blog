@@ -16,7 +16,12 @@
   </div>
   <div class="row clearfix">
     <div class="col-md-9 column">
+      <div th:if="${type != null}">
+        <ol class="breadcrumb">
+          <li><h3>当前类别-<span th:text="${type}"></span></h3></li>
 
+        </ol>
+      </div>
       <div class = "content" th:each="a:${articleList}">
       <h4 th:text="${a.title}" >
       </h4>

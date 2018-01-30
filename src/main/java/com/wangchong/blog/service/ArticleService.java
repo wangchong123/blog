@@ -18,6 +18,13 @@ public class ArticleService {
     @Autowired
     private ArticleDao articleDao;
 
+    /**
+     * 条件查询 分页
+     * @param type
+     * @param currPage
+     * @param Pagesize
+     * @return
+     */
     public List<Article> queryArticleList(Long type,Integer currPage,Integer Pagesize){
         Map<String,Object> map = new HashMap<>();
         if(type != null){
@@ -27,11 +34,20 @@ public class ArticleService {
         return articleDao.queryList(map);
     }
 
+    /**
+     * 不分页
+     * @return
+     */
     public List<Article> queryArticleList(){
         Map<String,Object> map = new HashMap<>();
         return articleDao.queryList(map);
     }
 
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
     public Article getArticle(Long id){
         if(id != null){
             return articleDao.getById(id);
@@ -39,19 +55,35 @@ public class ArticleService {
         return null;
     }
 
+    /**
+     * 更新对文章的操作
+     * @param id
+     * @param opt
+     */
     public void updateOpt(Long id,Integer opt){
         if(id != null && opt != null){
-            if(opt.equals(ConstantUtil.OPT1)){
+            if(opt.equals(ConstantUtil.OPT1)){ //赞
                 articleDao.addOpt1(id);
-            }else if(opt.equals(ConstantUtil.OPT2)){
+            }else if(opt.equals(ConstantUtil.OPT2)){ //评论
                 articleDao.addOpt2(id);
-            }else if(opt.equals(ConstantUtil.OPT3)){
+            }else if(opt.equals(ConstantUtil.OPT3)){ //浏览
                 articleDao.addOpt3(id);
             }
         }
     }
 
-    public boolean createArticle(String title,String describe,String content,Long type,Integer scope,Integer status,
+    /**
+     * 新增
+     * @param title
+     * @param describe
+     * @param content
+     * @param type
+     * @param scope
+     * @param status
+     * @param photo
+     * @return
+     */
+    public Article insertArticle(String title,String describe,String content,Long type,Integer scope,Integer status,
                                  String photo){
         Article article = new Article();
         article.setContent(content);
@@ -66,11 +98,16 @@ public class ArticleService {
         article.setStatus(status);
         article.setTitle(title);
         article.setType(type);
-        return articleDao.insert(article);
+        articleDao.insert(article);
+        return article;
     }
 
-    public List<Article> queryRank(){
-        return articleDao.queryRank();
+    /**
+     * 按浏览量查询
+     * @return
+     */
+    public List<Article> queryRankByOpt3(){
+        return articleDao.queryRankByOpt3();
     }
 
     public boolean deleteArticle(Long id){

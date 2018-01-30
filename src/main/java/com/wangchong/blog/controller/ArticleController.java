@@ -48,6 +48,10 @@ public class ArticleController {
         ModelAndView mav = new ModelAndView();
         List<Article> articleList = articleService.queryArticleList(type,currPage,pageSize);
         PageInfo<Article> page = new PageInfo<Article>(articleList);
+        if(type != null){
+            Type o = typeService.getType(type);
+            mav.addObject("type",o.getName());
+        }
         mav.addObject("articleList", articleList);
         mav.addObject("page",page);
         mav.setViewName("/index");
@@ -87,18 +91,43 @@ public class ArticleController {
         return map;
     }
 
+    /**
+     * 创建文章
+     * @param request
+     * @param title
+     * @param describe
+     * @param content
+     * @param status
+     * @param type
+     * @param scope
+     * @param photo
+     * @return
+     */
     @RequestMapping("/createArticle.do")
     public ModelAndView createArticle(HttpServletRequest request,String title,String describe,String content,
                                             Integer status,Long type,Integer scope,String photo){
         ModelAndView mav = new ModelAndView();
-        boolean result = articleService.createArticle(title,describe,content,type,scope,status,photo);
-       /* if(result){
-            LuceneUtil.createIndex(new Article());
-        }*/
-        mav.setViewName("/admin/article");
+        Article article = articleService.insertArticle(title,describe,content,type,scope,status,photo);
+        if(article != null && article.getStatus().intValue()==1){
+            LuceneUtil.createIndex(article);
+        }
+
+        mav.setViewName("redirect:/admin/listArticle.do");
         return mav;
     }
 
+    /**
+     * 更新
+     * @param request
+     * @param title
+     * @param describe
+     * @param content
+     * @param id
+     * @param type
+     * @param scope
+     * @param photo
+     * @return
+     */
     @RequestMapping("/updateArticle.do")
     public ModelAndView updateArticle(HttpServletRequest request,String title,String describe,String content,
                                       Long id,Long type,Integer scope,String photo){
@@ -107,7 +136,7 @@ public class ArticleController {
        /* if(result){
             LuceneUtil.createIndex(new Article());
         }*/
-        mav.setViewName("/admin/article");
+        mav.setViewName("redirect:/admin/listArticle.do");
         return mav;
     }
 
@@ -139,15 +168,23 @@ public class ArticleController {
         return mav;
     }
 
+    /**
+     * 根据浏览量查询
+     * @return
+     */
     @ResponseBody
-    @RequestMapping("/queryRank.do")
-    public Map<String,Object> queryRank(){
+    @RequestMapping("/queryRankByOpt3.do")
+    public Map<String,Object> queryRankByOpt3(){
         Map<String,Object> map = new HashMap<>();
-        List<Article> list = articleService.queryRank();
+        List<Article> list = articleService.queryRankByOpt3();
         map.put("list",list);
         return map;
     }
 
+    /**
+     * 后台查询全部 假分页
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/ajaxQueryList.do")
     public Map<String,Object> ajaxQueryList(){

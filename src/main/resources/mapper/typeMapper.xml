@@ -30,7 +30,7 @@
     </update>
 
     <select id="getById" parameterType="Long" resultType="com.wangchong.blog.entity.Type">
-        SELETC * FROM type WHERE id=#{id}
+        SELECT * FROM `type` WHERE id=#{id}
     </select>
 
 </mapper>
