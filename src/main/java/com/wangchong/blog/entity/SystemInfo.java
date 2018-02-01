@@ -7,10 +7,8 @@ public class SystemInfo {
 
     private Long id;
 
-    private Integer opt1;
+    private Integer totalPv;
 
-    private Integer opt2;
-
-    private Integer opt3;
+    private Integer todayPv;
 
 }

@@ -6,7 +6,7 @@
 	<groupId>com.wangchong</groupId>
 	<artifactId>blog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<name>blog</name>
 	<description>Demo project for Spring Boot</description>
