@@ -17,31 +17,14 @@
   <div class="row clearfix">
     <div class="col-md-9 column">
 
-      <div class = "content" th:each="a:${list}">
-      <h4 th:utext="${a.title}">
-      </h4>
-      <p th:utext="${a.describe}">
-      </p>
-      <p>
-        <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}">阅读全文 »</a>
+      <div class = "content well" th:each="a:${list}">
+        <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}"><h4 th:utext="${a.title}" >
+        </h4></a>
+
+      <p th:utext="${a.describe}" style="text-indent: 2em">
       </p>
       </div>
 
-
-     <!-- <ul class="pagination">
-        <li>
-          <a th:href="@{/article/index.do(currPage=1)}">首页</a>
-        </li>
-        <li>
-          <a th:href="@{/article/index.do(currPage=${page.prePage})}">上一页</a>
-        </li>
-        <li>
-          <a th:href="@{/article/index.do(currPage=${page.nextPage})}">下一页</a>
-        </li>
-        <li>
-          <a th:href="@{/article/index.do(currPage=${page.lastPage})}">末页</a>
-        </li>
-      </ul>-->
     </div>
     <div class="col-md-3 column" th:include="right :: right"></div>
   </div>
