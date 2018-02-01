@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -26,18 +27,44 @@ public class UserController {
      * @return
      */
     @RequestMapping("/login.do")
-    public ModelAndView Login(@RequestParam(value = "username",required = true) String username,
+    public ModelAndView login(@RequestParam(value = "username",required = true) String username,
                               @RequestParam(value = "password",required = true) String password,
                               HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
         User user = userService.login(username,password);
         if(user != null){
             request.getSession().setAttribute("user",user);
-            mav.addObject("user",user);
-            mav.setViewName("admin/index");
+            mav.setViewName("redirect:/user/main.do");
         }else{
             mav.setViewName("login");
         }
+        return mav;
+    }
+
+    @LoginCheck
+    @RequestMapping("/main.do")
+    public ModelAndView main( HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        User user = (User) request.getSession().getAttribute("user");
+        mav.addObject("user",user);
+        mav.setViewName("/admin/index");
+        return mav;
+    }
+
+    /**
+     * 注销
+     * @param request
+     * @return
+     */
+    @RequestMapping("/logout.do")
+    public ModelAndView logout(HttpServletRequest request){
+        ModelAndView mav = new ModelAndView();
+        try {
+            request.getSession().invalidate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mav.setViewName("redirect:/toLogin.do");
         return mav;
     }
 

@@ -5,7 +5,7 @@
 <mapper namespace = "com.wangchong.blog.dao.TypeDao" >
 
     <select id="queryList"  resultType="com.wangchong.blog.entity.Type">
-        SELECT * FROM type WHERE status=1 ORDER BY scope DESC
+        SELECT * FROM type WHERE status=1
     </select>
 
     <select id="queryTypeNums"  resultType="com.wangchong.blog.entity.Type">
@@ -30,7 +30,7 @@
     </update>
 
     <select id="getById" parameterType="Long" resultType="com.wangchong.blog.entity.Type">
-        SELETC * FROM type WHERE id=#{id}
+        SELECT * FROM `type` WHERE id=#{id}
     </select>
 
 </mapper>

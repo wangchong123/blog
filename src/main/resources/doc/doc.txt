@@ -1,0 +1,8 @@
+getById
+getByName
+
+insert
+update
+delete
+
+listArticle

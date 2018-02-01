@@ -13,7 +13,7 @@ function createIndex(){
 //渲染文章分类
 function renderType(){
     $.ajax({
-        url:"/type/typeList.do",
+        url:"/type/queryTypeNums.do",
         type:"post",
         dateType:"json",
         success:function(data){
@@ -28,7 +28,7 @@ function renderType(){
 
 function renderRank(){
     $.ajax({
-        url:"/article/queryRank.do",
+        url:"/article/queryRankByOpt3.do",
         type:"post",
         dateType:"json",
         success:function(data){

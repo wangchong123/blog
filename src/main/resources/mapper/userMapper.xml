@@ -4,7 +4,7 @@
 
 <mapper namespace = "com.wangchong.blog.dao.UserDao" >
 
-    <select id="getByName"  resultType="com.wangchong.blog.entity.User">
+    <select id="login"  resultType="com.wangchong.blog.entity.User">
         SELECT * FROM user WHERE username = #{arg0} AND password = #{arg1}
     </select>
 

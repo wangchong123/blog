@@ -16,19 +16,29 @@
   </div>
   <div class="row clearfix">
     <div class="col-md-9 column">
+      <div th:if="${type != null}">
+        <ol class="breadcrumb">
+          <li><h3>当前类别-<span th:text="${type}"></span></h3></li>
 
-      <div class = "content" th:each="a:${articleList}">
-      <h4 th:text="${a.title}" >
-      </h4>
-      <p th:text="${a.describe}">
+        </ol>
+      </div>
+      <div class = "content well" th:each="a:${articleList}">
+      <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}"><h4 th:text="${a.title}" >
+      </h4></a>
+        <div class="row">
+        <p class="pull-right col-xs-5 col-sm-3">
+            <span class="glyphicon glyphicon-calendar" th:text="${#dates.format(a.createtime,'yyyy-MM-dd')}"></span>
+            <span class="glyphicon glyphicon-eye-open" th:text="${a.opt3}" style="margin-left:20px"></span>
+        </p>
+        </div>
+        <div>
+      <p th:text="${a.describe}" style="text-indent: 2em">
       </p>
-      <p>
-        <a class="btn" th:href="@{/article/articleDetail.do(id=${a.id})}">阅读全文 »</a>
-      </p>
+        </div>
       </div>
 
 
-      <ul class="pagination">
+      <ul class="pagination pull-right">
         <li>
           <a th:href="@{/article/index.do(currPage=1)}">首页</a>
         </li>
@@ -50,20 +60,7 @@
 </html>
 
 <script>
-  $(document).ready(function(){
-      $.ajax({
-          url:"/article/addOpt3.do",
-          dataType:"json",
-          type:"post",
-          data:{
-              id:1
-          },
-          success:function(data){
-              console.log(data.ip)
 
-          }
-      })
-  })
 
 
 </script>

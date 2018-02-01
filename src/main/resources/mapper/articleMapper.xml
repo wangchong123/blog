@@ -5,7 +5,7 @@
 <mapper namespace = "com.wangchong.blog.dao.ArticleDao" >
 
     <select id="queryList"  resultType="com.wangchong.blog.entity.Article" parameterType="Map">
-        SELECT * FROM article WHERE status = 1 
+        SELECT a.*,t.name AS typeName FROM article a,type t WHERE a.status = 1 AND a.type=t.id
         <if test="type != null and type != ' '"> AND type=#{type} </if>
         ORDER BY scope DESC
 
@@ -27,13 +27,39 @@
         UPDATE article SET opt3 = opt3+1 WHERE id=#{id};
     </update>
 
-    <insert id="insert" parameterType="com.wangchong.blog.entity.Article">
-        INSERT INTO (title,describe,content,status,scope,opt1,opt2,opt3,opt4,createtime,type,photo)
-        VALUES (#{title},#{describe},#{content},#{status},#{scope},#{opt1},#{opt2},#{opt3},#{opt4},#{createtime},#{type},#{photo})
+    <insert id="insert" parameterType="com.wangchong.blog.entity.Article" keyProperty="id" useGeneratedKeys="true">
+        INSERT INTO article (title,`describe`,content,`status`,scope,createtime,`type`,photo)
+        VALUES (#{title},#{describe},#{content},#{status},#{scope},#{createtime},#{type},#{photo})
     </insert>
 
-    <select id="queryRank" resultType="com.wangchong.blog.entity.Article">
+    <select id="queryRankByOpt3" resultType="com.wangchong.blog.entity.Article">
         SELECT * FROM article WHERE status = 1 ORDER BY opt3 DESC limit 8
     </select>
+    
+    <update id="updateStatus">
+        UPDATE article SET status=#{arg1} WHERE id=#{arg0}
+    </update>
+
+    <update id="update" parameterType="Map" >
+        UPDATE articles SET id=#{id}
+        <if test="title!=null">
+            ,`title`=#{title}
+        </if>
+        <if test="describe!=null">
+            ,`describe`=#{describe}
+        </if>
+        <if test="content!=null">
+            , `content`=#{content}
+        </if>
+        <if test="scope!=null">
+            , `scope`=#{scope}
+        </if>
+        <if test="type!=null">
+            ,`type`=#{type}
+        </if>
+        WHERE id=#{id}
+
+
+    </update>
 
 </mapper>

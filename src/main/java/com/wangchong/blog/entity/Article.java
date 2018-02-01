@@ -22,4 +22,6 @@ public class Article implements Serializable{
     private Integer scope;
     private Long type;
 
+    private String typeName;
+
 }
