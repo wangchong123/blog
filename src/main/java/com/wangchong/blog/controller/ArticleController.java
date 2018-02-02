@@ -85,9 +85,7 @@ public class ArticleController {
     public Map<String,Object> opt3(HttpServletRequest request,
                     @RequestParam(value = "id",required = false) Long id){
         Map<String,Object> map = new HashMap<>();
-        String ip = CommonUtil.getIpAddr(request);
         articleService.updateOpt(id, ConstantUtil.OPT3);
-        map.put("ip",ip);
         return map;
     }
 

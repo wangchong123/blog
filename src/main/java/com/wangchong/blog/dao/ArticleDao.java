@@ -31,6 +31,8 @@ public interface ArticleDao {
      */
     List<Article> queryRankByOpt3();
 
+    int getCount();
+
 
 
 

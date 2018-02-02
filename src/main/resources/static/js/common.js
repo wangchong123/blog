@@ -1,3 +1,6 @@
+/**
+ * 创建索引
+ */
 function createIndex(){
     $.ajax({
         url:"/article/createLuceneIndex.do",
@@ -26,6 +29,9 @@ function renderType(){
     })
 }
 
+/**
+ * 渲染阅读排行榜
+ */
 function renderRank(){
     $.ajax({
         url:"/article/queryRankByOpt3.do",
@@ -40,7 +46,22 @@ function renderRank(){
         }
     })
 }
+
+/**
+ * 记录pv
+ */
+function pvRecord(){
+    $.ajax({
+        url:"/pv/pvRecord.do",
+        type:"post",
+        dateType:"json",
+        success:function(data){
+
+        }
+    })
+}
 $(document).ready(function(){
     renderType();
     renderRank();
+    pvRecord();
 })

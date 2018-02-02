@@ -1,7 +1,10 @@
 package com.wangchong.blog.controller;
 
 import com.wangchong.blog.annotation.LoginCheck;
+import com.wangchong.blog.entity.Pv;
 import com.wangchong.blog.entity.User;
+import com.wangchong.blog.service.ArticleService;
+import com.wangchong.blog.service.PvService;
 import com.wangchong.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.Map;
 
 @Controller
@@ -19,6 +23,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PvService pvService;
+    @Autowired
+    private ArticleService articleService;
 
     /**
      * 后台登录
@@ -46,7 +54,11 @@ public class UserController {
     public ModelAndView main( HttpServletRequest request){
         ModelAndView mav = new ModelAndView();
         User user = (User) request.getSession().getAttribute("user");
+        Pv pv = pvService.getByDate(new Date());
+        int articleNum = articleService.getArticleCount();
         mav.addObject("user",user);
+        mav.addObject("pv",pv);
+        mav.addObject("articleNum",articleNum);
         mav.setViewName("/admin/index");
         return mav;
     }

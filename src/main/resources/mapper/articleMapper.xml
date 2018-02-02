@@ -41,7 +41,7 @@
     </update>
 
     <update id="update" parameterType="Map" >
-        UPDATE articles SET id=#{id}
+        UPDATE article SET id=#{id}
         <if test="title!=null">
             ,`title`=#{title}
         </if>
@@ -58,8 +58,10 @@
             ,`type`=#{type}
         </if>
         WHERE id=#{id}
-
-
     </update>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(1) FROM article WHERE status = 1
+    </select>
 
 </mapper>

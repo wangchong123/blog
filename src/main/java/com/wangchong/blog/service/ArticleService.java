@@ -128,4 +128,8 @@ public class ArticleService {
         map.put("scope",scope);
         return articleDao.update(map);
     }
+
+    public int getArticleCount(){
+        return articleDao.getCount();
+    }
 }
