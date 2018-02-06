@@ -3,6 +3,7 @@ package com.wangchong.blog.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.wangchong.blog.annotation.LoginCheck;
+import com.wangchong.blog.annotation.TraceLog;
 import com.wangchong.blog.entity.Article;
 import com.wangchong.blog.entity.Type;
 import com.wangchong.blog.service.ArticleService;
@@ -40,6 +41,7 @@ public class ArticleController {
      * @return
      */
    // @LoginCheck
+    @TraceLog(name = "首页")
     @RequestMapping("/index.do")
     public ModelAndView index(HttpServletRequest request,
                               @RequestParam(value = "type", required = false) Long type,
@@ -170,6 +172,7 @@ public class ArticleController {
      * 根据浏览量查询
      * @return
      */
+    @TraceLog(name = "浏览量查询")
     @ResponseBody
     @RequestMapping("/queryRankByOpt3.do")
     public Map<String,Object> queryRankByOpt3(){
