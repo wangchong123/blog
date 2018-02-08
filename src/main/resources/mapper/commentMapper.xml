@@ -9,10 +9,6 @@
         VALUES (#{articleId},#{content},#{status},#{createtime},#{customerName})
     </insert>
 
-    <update id="update" parameterType="com.wangchong.blog.entity.Comment">
-        UPDATE comment SET status=#{status},reply=#{reply},replytime=#{replytime}
-        WHERE id=#{id}
-    </update>
 
     <delete id="delete" parameterType="Long">
         DELETE FROM comment WHERE id=#{id}
@@ -20,6 +16,21 @@
 
     <select id="getById" parameterType="Long">
         SELECT * FROM comment WHERE id =#{id}
+    </select>
+
+    <select id="queryList" parameterType="Map" resultType="com.wangchong.blog.entity.Comment">
+        SELECT * FROM comment WHERE status=#{status}
+        <if test="articleId!=null">
+            AND articleId=#{articleId}
+        </if>
+        ORDER BY createtime DESC
+    </select>
+
+    <select id="queryListCount" parameterType="Map" resultType="int">
+        SELECT count(1) FROM comment WHERE status=#{status}
+        <if test="articleId!=null">
+            AND articleId=#{articleId}
+        </if>
     </select>
 
 </mapper>

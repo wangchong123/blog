@@ -149,7 +149,6 @@ public class LuceneUtil {
                 Document document = searcher.doc(score.doc);
                 String title = document.get("title");
                 String describe = document.get("describe");
-                System.out.println(describe);
                 //显示高亮部分
                 if(StringUtils.isNotBlank(title)){
                     TokenStream tokenStream = analyzer.tokenStream("title",new StringReader(title));
@@ -165,7 +164,6 @@ public class LuceneUtil {
                         describe = document.get("describe");
                     }
                 }
-                System.out.println(describe);
                 obj.setId(Long.valueOf(document.get("id")));
                 obj.setTitle(title);
                 obj.setDescribe(describe);

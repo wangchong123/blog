@@ -13,8 +13,8 @@ public class Comment implements Serializable {
     private String content;
     private Integer status;
     private Date createtime;
-    private String reply;
-    private Date replytime;
     private String customerName;
+    private String customerPhone;
+
 
 }

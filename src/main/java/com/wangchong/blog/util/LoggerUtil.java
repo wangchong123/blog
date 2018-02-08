@@ -20,7 +20,6 @@ public class LoggerUtil {
     public static String getRequestParametersLoggerInfo(
             HttpServletRequest request) {
         StringBuffer loggerInfoSb = new StringBuffer(REQUEST_PARAM_INFO);
-        System.out.println(request.getRequestURI());
 
 		Enumeration<String> e = request.getParameterNames();
 		String parameterKey;
