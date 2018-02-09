@@ -19,4 +19,6 @@ public interface CommentDao {
 
     int queryListCount(Map<String,Object> map);
 
+    boolean update(Long id,Integer status);
+
 }

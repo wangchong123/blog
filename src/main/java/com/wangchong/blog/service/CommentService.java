@@ -52,11 +52,13 @@ public class CommentService {
      * @param Pagesize
      * @return
      */
-    public List<Comment> queryCommentList(Long articleId,Integer status,Integer currPage,Integer Pagesize){
+    public List<Comment> queryCommentList(Long articleId,Integer status,Integer currPage,Integer Pagesize,boolean flag){
         Map<String,Object> map = new HashMap<>();
         map.put("articleId",articleId);
         map.put("status",status);
-        PageHelper.startPage(currPage,Pagesize);
+        if(flag){
+            PageHelper.startPage(currPage,Pagesize);
+        }
         return commentDao.queryList(map);
     }
 
@@ -71,6 +73,13 @@ public class CommentService {
         map.put("articleId",articleId);
         map.put("status",status);
         return commentDao.queryListCount(map);
+    }
+
+    public boolean optComment(Long id,Integer status){
+        if(id == null || status == null){
+            return false;
+        }
+        return commentDao.update(id,status);
     }
 
 }

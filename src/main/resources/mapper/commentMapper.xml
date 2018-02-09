@@ -19,7 +19,7 @@
     </select>
 
     <select id="queryList" parameterType="Map" resultType="com.wangchong.blog.entity.Comment">
-        SELECT * FROM comment WHERE status=#{status}
+        SELECT c.* ,a.title AS title FROM comment c,article a WHERE c.status=#{status} AND c.articleId=a.id
         <if test="articleId!=null">
             AND articleId=#{articleId}
         </if>
@@ -32,5 +32,9 @@
             AND articleId=#{articleId}
         </if>
     </select>
+
+    <update id="update">
+        UPDATE comment SET status=#{arg1} WHERE id=#{arg0}
+    </update>
 
 </mapper>

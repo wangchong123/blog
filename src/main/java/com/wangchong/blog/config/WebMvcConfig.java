@@ -18,6 +18,7 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         registry.addViewController("/").setViewName("redirect:/article/index.do");
         registry.addViewController("/toArticle.do").setViewName("/article");
         registry.addViewController("/admin/listArticle.do").setViewName("/admin/article");
+        registry.addViewController("/admin/listComment.do").setViewName("/admin/comment");
     }
 
     @Override

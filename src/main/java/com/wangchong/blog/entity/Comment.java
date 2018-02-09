@@ -16,5 +16,8 @@ public class Comment implements Serializable {
     private String customerName;
     private String customerPhone;
 
+    //文章标题
+    private String title;
+
 
 }

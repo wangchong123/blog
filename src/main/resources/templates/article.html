@@ -105,11 +105,12 @@
             type:'post',
             dataType:'json',
             data:{
-                articleId:[[${article.id}]]
+                articleId:[[${article.id}]],
+                flag:true
             },
             success:function(data){
                 var html='';
-                $.each(data.list,function(i,v){
+                $.each(data.data,function(i,v){
                     html+='<li>';
                     html+='<span>'+v.customerName+'</span>:';
                     html+='<div class="well">';
