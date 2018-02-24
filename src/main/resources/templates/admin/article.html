@@ -18,6 +18,7 @@
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link href="/css/common.css" rel="stylesheet"/>
+    <link href="/kindeditor/plugins/code/prettify.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="wrapper">
@@ -77,7 +78,7 @@
 </div>
 
 
-<div class="modal fade" id="myModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModel"  role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
     <div class="modal-dialog" style="width:800px">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,8 +153,9 @@
 <script src="/js/custom-scripts.js"></script>
 <script src="/js/dataTables.js"></script>
 <script src="/js/moment.js"></script>
-<script type="text/javascript" charset="utf-8" src="/kindeditor/kindeditor-all-min.js"></script>
-<script type="text/javascript" charset="utf-8" src="/kindeditor/lang/zh-CN.js"></script>
+<script  charset="utf-8" src="/kindeditor/kindeditor-all-min.js"></script>
+<script  charset="utf-8" src="/kindeditor/lang/zh-CN.js"></script>
+<script  charset="utf-8" src="/kindeditor/plugins/code/prettify.js"></script>
 <script>
     var $table;
     var editor;
@@ -240,9 +242,12 @@
         $("#myModel").modal('show');
 
     }
-
     KindEditor.ready(function(K) {
-       editor = K.create('#editor');
+       editor = K.create('#editor',{
+           cssPath : '/kindeditor/plugins/code/prettify.css',
+           filterMode : false
+       });
+        prettyPrint();
     });
 
     function renderType(){
