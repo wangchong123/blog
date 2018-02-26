@@ -18,7 +18,6 @@
     <!-- Google Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'/>
     <link href="/css/common.css" rel="stylesheet"/>
-    <link href="/kindeditor/plugins/code/prettify.css" rel="stylesheet"/>
 </head>
 <body>
 <div id="wrapper">
@@ -67,7 +66,6 @@
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                     <!--End Advanced Tables -->
@@ -126,7 +124,9 @@
                     <div class="form-group">
                         <label for="content" class="col-sm-1 control-label">正文</label>
                         <div class="col-sm-10">
-                        <textarea  id="editor" class="form-control" name="content" style="width:700px;height:300px;"></textarea >
+                            <div id="div1">
+                            </div>
+                        <input type="hidden"  id="editor" class="form-control" name="content" style="width:700px;height:300px;"/>
                         </div>
                     </div>
                     <input type="hidden" name="id" class="form-control"/>
@@ -153,9 +153,7 @@
 <script src="/js/custom-scripts.js"></script>
 <script src="/js/dataTables.js"></script>
 <script src="/js/moment.js"></script>
-<script  charset="utf-8" src="/kindeditor/kindeditor-all-min.js"></script>
-<script  charset="utf-8" src="/kindeditor/lang/zh-CN.js"></script>
-<script  charset="utf-8" src="/kindeditor/plugins/code/prettify.js"></script>
+<script  charset="utf-8" src="/js/wangEditor.min.js"></script>
 <script>
     var $table;
     var editor;
@@ -204,7 +202,7 @@
                         if(k==$this.prop("name")){
                             $this.val(v);
                             if(k=='content'){
-                               editor.html(v);
+                               editor.txt.html(v);
                             }
                         }
                     })
@@ -236,19 +234,24 @@
     }
 
     function addItem(){
+
         renderType();
         $("#myModalLabel").text("新增");
         $("#myForm").prop("action","/article/createArticle.do");
         $("#myModel").modal('show');
 
     }
-    KindEditor.ready(function(K) {
-       editor = K.create('#editor',{
-           cssPath : '/kindeditor/plugins/code/prettify.css',
-           filterMode : false
-       });
-        prettyPrint();
-    });
+
+    var E = window.wangEditor
+    editor = new E('#div1')
+    var $text1 = $('#editor')
+    editor.customConfig.onchange = function (html) {
+        // 监控变化，同步更新到 textarea
+        $text1.val(html)
+    }
+    editor.create()
+    // 初始化 textarea 的值
+    $text1.val(editor.txt.html())
 
     function renderType(){
         $.ajax({
