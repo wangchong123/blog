@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * 日志记录
+ */
 @Component
 @Aspect
 public class TraceLogAspect {

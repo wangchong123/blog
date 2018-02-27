@@ -12,6 +12,12 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
+    /**
+     * 后台登陆
+     * @param username
+     * @param password
+     * @return
+     */
     public User login(String username,String password){
 
         return userDao.login(username, Md5Util.getMD5(password));

@@ -15,10 +15,26 @@ public interface CommentDao {
 
     Comment getById(Long id);
 
+    /**
+     * 条件查询
+     * @param map
+     * @return
+     */
     List<Comment> queryList(Map<String,Object> map);
 
+    /**
+     * 查询文章评论数
+     * @param map
+     * @return
+     */
     int queryListCount(Map<String,Object> map);
 
+    /**
+     * 更改状态
+     * @param id
+     * @param status
+     * @return
+     */
     boolean update(Long id,Integer status);
 
 }

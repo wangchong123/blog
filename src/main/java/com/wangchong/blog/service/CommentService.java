@@ -21,6 +21,13 @@ public class CommentService {
     @Autowired
     private ArticleDao articleDao;
 
+    /**
+     * 新增评论
+     * @param articleId
+     * @param content
+     * @param customerName
+     * @return
+     */
     public boolean comment(Long articleId,String content,String customerName){
         Comment obj = new Comment();
         obj.setArticleId(articleId);
@@ -37,6 +44,11 @@ public class CommentService {
     }
 
 
+    /**
+     * 根据id获取评论对象
+     * @param id
+     * @return
+     */
     public Comment getComment(Long id){
         if(id != null){
             return commentDao.getById(id);
@@ -75,6 +87,12 @@ public class CommentService {
         return commentDao.queryListCount(map);
     }
 
+    /**
+     * 更改评论状态
+     * @param id
+     * @param status
+     * @return
+     */
     public boolean optComment(Long id,Integer status){
         if(id == null || status == null){
             return false;

@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * 分类
+ */
 @Repository
 public interface TypeDao {
 
@@ -17,7 +20,15 @@ public interface TypeDao {
 
     Type getById(Long id);
 
+    /**
+     * 查询全部
+     * @return
+     */
     List<Type> queryList();
 
+    /**
+     * 查询分类并统计文章数量
+     * @return
+     */
     List<Type> queryTypeNums();
 }

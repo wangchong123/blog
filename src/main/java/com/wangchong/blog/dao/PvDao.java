@@ -10,5 +10,10 @@ public interface PvDao {
 
     boolean insert(Pv pv);
 
+    /**
+     * 获取pv统计
+     * @param date
+     * @return
+     */
     Pv getByDate(Date date);
 }

@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * 错误跳转
+ */
 @Controller
 public class ErrorPageController implements ErrorController {
 

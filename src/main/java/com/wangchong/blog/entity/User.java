@@ -4,6 +4,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
+/**
+ * 后台登陆实体
+ */
 @Data
 public class User implements Serializable {
 

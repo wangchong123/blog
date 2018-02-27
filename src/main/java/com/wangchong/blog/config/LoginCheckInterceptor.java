@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.lang.reflect.Method;
 
+/**
+ * 登陆检查
+ */
 @Component
 public class LoginCheckInterceptor implements HandlerInterceptor{
     @Override

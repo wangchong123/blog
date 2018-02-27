@@ -23,6 +23,11 @@ public class PvService {
         return pvDao.insert(pv);
     }
 
+    /**
+     * 获取pv统计
+     * @param date
+     * @return
+     */
     public Pv getByDate(Date date){
         if(date == null){
             date = new Date();

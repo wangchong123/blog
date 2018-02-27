@@ -69,6 +69,13 @@ public class CommentController {
         return map;
     }
 
+    /**
+     * 更改评论状态
+     * @param request
+     * @param id
+     * @param status
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/optComment.do")
     public Map<String,Object> ajaxOptComment(HttpServletRequest request,Long id,Integer status){

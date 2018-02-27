@@ -20,6 +20,11 @@ public class PvController {
     private PvService pvService;
 
 
+    /**
+     * 记录pv
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/pvRecord.do")
     public Map<String,Object> pvRecord(HttpServletRequest request){
@@ -29,6 +34,10 @@ public class PvController {
         return map;
     }
 
+    /**
+     * 获取pv统计
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/getPvByDate.do")
     public Map<String,Object> getPvByDate(){

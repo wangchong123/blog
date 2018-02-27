@@ -40,7 +40,6 @@ public class ArticleController {
      * @param pageSize
      * @return
      */
-   // @LoginCheck
     @TraceLog(name = "首页")
     @RequestMapping("/index.do")
     public ModelAndView index(HttpServletRequest request,
@@ -158,6 +157,12 @@ public class ArticleController {
     }
 
 
+    /**
+     * 搜索
+     * @param request
+     * @param source
+     * @return
+     */
     @RequestMapping("/search.do")
     public ModelAndView search(HttpServletRequest request,String source){
         ModelAndView mav = new ModelAndView();
@@ -195,6 +200,11 @@ public class ArticleController {
         return map;
     }
 
+    /**
+     * ajax根据id查询文章
+     * @param id
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/ajaxGetArticle.do")
     public Map<String,Object> ajaxGetArticle(Long id){
@@ -204,6 +214,11 @@ public class ArticleController {
         return map;
     }
 
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/ajaxDeleteArticle.do")
     public Map<String,Object> ajaxDeleteArticle(Long id){

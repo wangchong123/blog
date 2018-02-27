@@ -49,6 +49,11 @@ public class UserController {
         return mav;
     }
 
+    /**
+     * 首页加载数据
+     * @param request
+     * @return
+     */
     @LoginCheck
     @RequestMapping("/main.do")
     public ModelAndView main( HttpServletRequest request){

@@ -61,7 +61,7 @@
     </update>
 
     <select id="getCount" resultType="int">
-        SELECT COUNT(1) FROM article WHERE status = 1
+        SELECT COUNT(*) FROM article WHERE status = 1
     </select>
 
 </mapper>

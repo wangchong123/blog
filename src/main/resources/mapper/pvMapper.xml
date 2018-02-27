@@ -10,8 +10,8 @@
 
     <select id="getByDate" resultType="com.wangchong.blog.entity.Pv">
         SELECT p.c AS todayPv,v.c AS totalPv FROM
-          (SELECT count(1) AS c FROM pv WHERE date_format(createtime,'%Y-%m-%d') = date_format(#{date},'%Y-%m-%d')) p,
-          (SELECT count(1) AS c FROM pv) v
+          (SELECT count(*) AS c FROM pv WHERE date_format(createtime,'%Y-%m-%d') = date_format(#{date},'%Y-%m-%d')) p,
+          (SELECT count(*) AS c FROM pv) v
     </select>
 
 

@@ -15,6 +15,11 @@ public class TypeService {
     @Autowired
     private TypeDao typeDao;
 
+    /**
+     * 根据id获取
+     * @param id
+     * @return
+     */
     public Type getType(Long id){
         if(id != null){
             return typeDao.getById(id);
@@ -22,6 +27,13 @@ public class TypeService {
         return null;
     }
 
+    /**
+     * 新增
+     * @param name
+     * @param status
+     * @param scope
+     * @return
+     */
     public boolean createType(String name,Integer status,Integer scope){
         Type obj = new Type();
         obj.setName(name);
@@ -30,6 +42,13 @@ public class TypeService {
         return typeDao.insert(obj);
     }
 
+    /**
+     * 更新
+     * @param name
+     * @param status
+     * @param scope
+     * @return
+     */
     public boolean updateType(String name,Integer status,Integer scope){
         Map<String,Object> map = new HashMap<>();
         map.put("name",name);
@@ -45,10 +64,18 @@ public class TypeService {
         return false;
     }
 
+    /**
+     * 查询带文章数量
+     * @return
+     */
     public List<Type> queryTypeList(){
         return typeDao.queryTypeNums();
     }
 
+    /**
+     * 查询
+     * @return
+     */
     public List<Type> listType(){
         return typeDao.queryList();
     }

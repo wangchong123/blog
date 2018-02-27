@@ -19,6 +19,11 @@ public class TypeController {
     @Autowired
     private TypeService typeService;
 
+    /**
+     * 条件查询
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/typeList.do")
     public Map<String,Object> queryTypeList(HttpServletRequest request){
@@ -28,6 +33,11 @@ public class TypeController {
         return map;
     }
 
+    /**
+     * 查询每个分类下的文章数量
+     * @param request
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/queryTypeNums.do")
     public Map<String,Object> queryTypeNums(HttpServletRequest request){

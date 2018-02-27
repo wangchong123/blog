@@ -27,7 +27,7 @@
     </select>
 
     <select id="queryListCount" parameterType="Map" resultType="int">
-        SELECT count(1) FROM comment WHERE status=#{status}
+        SELECT count(*) FROM comment WHERE status=#{status}
         <if test="articleId!=null">
             AND articleId=#{articleId}
         </if>

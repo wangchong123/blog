@@ -117,6 +117,17 @@ public class ArticleService {
         return false;
     }
 
+    /**
+     * 更新
+     * @param id
+     * @param title
+     * @param describe
+     * @param content
+     * @param type
+     * @param scope
+     * @param photo
+     * @return
+     */
     public boolean updateArticle(Long id,String title,String describe,String content,Long type,Integer scope,
                                  String photo){
         Map<String,Object> map = new HashMap<>();
@@ -129,6 +140,10 @@ public class ArticleService {
         return articleDao.update(map);
     }
 
+    /**
+     * 获取文章数量
+     * @return
+     */
     public int getArticleCount(){
         return articleDao.getCount();
     }
