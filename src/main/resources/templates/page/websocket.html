@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Title</title>
+</head>
+<body>
+  <input type="text" id="content"> <button onclick="send()">发送</button>
+
+<textarea style="width: 1024px;height: 500px;" id="res">
+
+</textarea>
+
+<script>
+    var socket;
+    if(!window.WebSocket){
+        window.WebSocket = window.MozWebSocket;
+    }
+
+    if(window.WebSocket){
+        socket = new WebSocket("ws://localhost:8888/websocket");
+        socket.onmessage = function(event){
+            var content = document.getElementById("res");
+            content.value = event.data;
+
+        }
+
+        socket.onopen = function(event){
+            var content = document.getElementById("res");
+            content.value = "连接打开";
+        }
+
+        socket.onclose = function(event){
+            var content = document.getElementById("res");
+            content.value = "连接关闭";
+        }
+
+        function send(){
+            if(!window.WebSocket){
+                return;
+            }
+            if(socket.readyState = WebSocket.OPEN){
+                var c = document.getElementById("content").value;
+                socket.send(c);
+            }else{
+                alert("连接已关闭！")
+            }
+
+
+        }
+
+    }else{
+        alert("不支持websocket");
+    }
+
+</script>
+</body>
+</html>

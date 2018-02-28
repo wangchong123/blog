@@ -18,7 +18,6 @@ public class ErrorPageController implements ErrorController {
     @RequestMapping(ERROR_PATH)
     public String handleError(HttpServletRequest request, HttpServletResponse response){
         int code=response.getStatus();
-        System.out.println(code);
         if(code == 500){
             return "/page/500";
         }else if(code == 404){
