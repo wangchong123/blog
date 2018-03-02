@@ -3,40 +3,116 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js"></script>
 </head>
 <body>
-  <input type="text" id="content"> <button onclick="send()">发送</button>
+用户名：<input type="text" id="name"/>
+<button onclick="openConnect()">打开连接</button>
+<input type="text" id="content"/> <button onclick="send()">发送</button>
+<button onclick="closeConnect()">关闭连接</button>
+
 
 <textarea style="width: 1024px;height: 500px;" id="res">
 
 </textarea>
 
+<div>
+    <ul id="user">
+
+    </ul>
+</div>
+
 <script>
     var socket;
+    var user;
+    var toUser;
     if(!window.WebSocket){
         window.WebSocket = window.MozWebSocket;
     }
 
+    function login(){
+        $.ajax({
+            url:'/user/webLogin',
+            type:'post',
+            dataType:'json',
+            data:{
+                name:$("#name").val()
+            },
+            success:function(data){
+                if(data.result){
+                    user = data.name;
+                    renderUser(data.user)
+                }
+            }
+        })
+    }
+
+    function logout(){
+        $.ajax({
+            url:'/user/webLogout',
+            type:'post',
+            dataType:'json',
+            data:{
+                name:user
+            },
+            success:function(data){
+                renderUser(data.user);
+
+            }
+        })
+    }
+
+    function renderUser(o){
+        var html="";
+        $.each(o,function(i,v){
+            html+='<li>'+v+'</li>';
+        })
+        $("#user").html(html);
+
+    }
+
+
     if(window.WebSocket){
-        socket = new WebSocket("ws://localhost:8888/websocket");
-        socket.onmessage = function(event){
-            var content = document.getElementById("res");
-            content.value = event.data;
+
+        function openConnect(){
+             if (socket != null ) {
+                 if(socket.readyState == WebSocket.OPEN){
+                     alert("已连接，请不要重复连接！");
+                     return;
+                 }
+             }
+            login();
+            socket = new WebSocket("ws://localhost:8888/websocket");
+            socket.onmessage = function(event){
+                var content = document.getElementById("res");
+                content.value = event.data;
+
+            }
+
+            socket.onopen = function(event){
+                var content = document.getElementById("res");
+                content.value = "连接打开";
+            }
+
+            socket.onclose = function(event){
+                var content = document.getElementById("res");
+                content.value = "连接关闭了";
+            }
 
         }
 
-        socket.onopen = function(event){
-            var content = document.getElementById("res");
-            content.value = "连接打开";
-        }
+        function closeConnect(){
+            logout();
+            socket.send('close');
 
-        socket.onclose = function(event){
-            var content = document.getElementById("res");
-            content.value = "连接关闭";
         }
 
         function send(){
             if(!window.WebSocket){
+                return;
+            }
+            if(!socket){
+                alert("连接未打开");
                 return;
             }
             if(socket.readyState = WebSocket.OPEN){
@@ -45,8 +121,6 @@
             }else{
                 alert("连接已关闭！")
             }
-
-
         }
 
     }else{

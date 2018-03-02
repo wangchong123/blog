@@ -12,8 +12,12 @@ import io.netty.handler.codec.http.HttpResponseStatus;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.*;
 import io.netty.util.CharsetUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
+
+    Logger log = LoggerFactory.getLogger(WebsocketHandler.class);
 
     private WebSocketServerHandshaker handshaker;
     private static final String WEB_SOCKET_URL = "ws://localhost:8888/websocket";
@@ -34,6 +38,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         NettyConfig.group.add(ctx.channel());
+
+        log.info("当前用户数量--"+NettyConfig.group.size());
     }
 
     /**
@@ -45,6 +51,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
         NettyConfig.group.remove(ctx.channel());
+        ctx.channel().close();
+        log.info("当前用户数量--"+NettyConfig.group.size());
     }
 
     /**
@@ -107,25 +115,34 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
     }
 
 
-    private void handWebsocketFrame(ChannelHandlerContext context,WebSocketFrame frame){
+    private void handWebsocketFrame(ChannelHandlerContext ctx,WebSocketFrame frame){
         if(frame instanceof CloseWebSocketFrame){
-            handshaker.close(context.channel(), (CloseWebSocketFrame) frame.retain());
+            handshaker.close(ctx.channel(), (CloseWebSocketFrame) frame.retain());
         }
 
         if(frame instanceof PingWebSocketFrame){
-            context.write(new PongWebSocketFrame(frame.content().retain()));
+            ctx.write(new PongWebSocketFrame(frame.content().retain()));
         }
 
         if(!(frame instanceof TextWebSocketFrame)){
             throw new RuntimeException("不支持该消息类型");
+        } else{
+            //服务端接收到的消息
+            String request = ((TextWebSocketFrame) frame).text();
+            if ("close".equals(request)) {
+                ctx.channel().close();
+                return;
+            }
+
+            // 应答消息
+            TextWebSocketFrame resFrame = new TextWebSocketFrame(ctx.channel().id()+"----ddddd--"+request);
+            //群发消息
+           ctx.channel().writeAndFlush(resFrame);
         }
-        //服务端接收到的消息
-        String request = ((TextWebSocketFrame) frame).text();
 
-        // 应答消息
-       TextWebSocketFrame resFrame = new TextWebSocketFrame(context.channel().id()+"------"+request);
 
-        //群发消息
-        NettyConfig.group.writeAndFlush(resFrame);
+
+
+
     }
 }
