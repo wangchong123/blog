@@ -7,6 +7,7 @@ import com.wangchong.blog.service.ArticleService;
 import com.wangchong.blog.service.PvService;
 import com.wangchong.blog.service.UserService;
 import com.wangchong.blog.websocket.NettyConfig;
+import com.wangchong.blog.websocket.UserSession;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -102,6 +103,8 @@ public class UserController {
          Map<String,Object> map = new HashMap<>();
          if(StringUtils.isNotBlank(name)){
              NettyConfig.userList.add(name);
+             UserSession session = new UserSession();
+             session.setUsername(name);
          }
          map.put("result",true);
          map.put("name",name);
@@ -112,6 +115,7 @@ public class UserController {
     @ResponseBody
     @RequestMapping("/webLogout")
     public Map<String,Object> webLogout(String name){
+        System.out.println("-------------"+name);
         Map<String,Object> map = new HashMap<>();
         if(NettyConfig.userList.contains(name)){
             NettyConfig.userList.remove(name);

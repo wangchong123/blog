@@ -6,6 +6,7 @@ import io.netty.channel.group.DefaultChannelGroup;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class NettyConfig {
@@ -16,7 +17,11 @@ public class NettyConfig {
 
     public static List<String> userList = new ArrayList<>();
 
+    public static List<UserSession> userSessions = new ArrayList<>();
 
+    public static List<UserSession> createSession(UserSession session){
 
+        return NettyConfig.userSessions;
+    }
 
 }

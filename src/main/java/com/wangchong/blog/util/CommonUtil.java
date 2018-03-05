@@ -3,6 +3,9 @@ package com.wangchong.blog.util;
 import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 public class CommonUtil {
 
@@ -34,5 +37,17 @@ public class CommonUtil {
             }
         }
         return ipAddress;
+    }
+
+
+    /**
+     * list元素去重
+     * 原list元素顺序不变，不要求顺序可改为HashSet
+     * @param list
+     * @param <e>
+     * @return
+     */
+    public static <e> List<e> function (List <e> list) {
+        return new ArrayList<e>(new LinkedHashSet<e>(list));
     }
 }

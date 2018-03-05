@@ -2,10 +2,7 @@ package com.wangchong.blog.websocket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelFutureListener;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.channel.*;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.HttpResponseStatus;
@@ -38,8 +35,14 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         NettyConfig.group.add(ctx.channel());
-
+        createSession(ctx.channel());
         log.info("当前用户数量--"+NettyConfig.group.size());
+    }
+
+    private void createSession(Channel channel) {
+        UserSession session = new UserSession();
+        session.setChannelId(channel.id().toString());
+
     }
 
     /**
@@ -72,6 +75,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
     protected void messageReceived(ChannelHandlerContext channelHandlerContext, Object o) throws Exception {
         if (o instanceof FullHttpRequest) { //处理客户端向服务端发起的http请求
+
             handHttpRequest(channelHandlerContext, (FullHttpRequest) o);
 
         } else if (o instanceof WebSocketFrame) { //处理websocket请求
@@ -91,6 +95,8 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
             sendHttpResponse(ctx,req,new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.BAD_REQUEST));
             return;
         }
+        String uri = req.getUri();
+        log.info("uri---------------"+uri);
         WebSocketServerHandshakerFactory factory = new WebSocketServerHandshakerFactory(WEB_SOCKET_URL,null,false);
         handshaker = factory.newHandshaker(req);
         if(handshaker == null){
@@ -124,9 +130,7 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
             ctx.write(new PongWebSocketFrame(frame.content().retain()));
         }
 
-        if(!(frame instanceof TextWebSocketFrame)){
-            throw new RuntimeException("不支持该消息类型");
-        } else{
+        if((frame instanceof TextWebSocketFrame)){
             //服务端接收到的消息
             String request = ((TextWebSocketFrame) frame).text();
             if ("close".equals(request)) {
@@ -137,7 +141,9 @@ public class WebsocketHandler extends SimpleChannelInboundHandler<Object> {
             // 应答消息
             TextWebSocketFrame resFrame = new TextWebSocketFrame(ctx.channel().id()+"----ddddd--"+request);
             //群发消息
-           ctx.channel().writeAndFlush(resFrame);
+            ctx.channel().writeAndFlush(resFrame);
+        } else{
+            throw new RuntimeException("不支持该消息类型");
         }
 
 

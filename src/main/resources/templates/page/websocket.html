@@ -56,7 +56,7 @@
                 name:user
             },
             success:function(data){
-                renderUser(data.user);
+                //renderUser(data.user);
 
             }
         })
@@ -82,10 +82,10 @@
                  }
              }
             login();
-            socket = new WebSocket("ws://localhost:8888/websocket");
+            socket = new WebSocket("ws://localhost:8888/websocket?token=123456");
             socket.onmessage = function(event){
                 var content = document.getElementById("res");
-                content.value = event.data;
+                content.value += event.data;
 
             }
 
@@ -97,6 +97,7 @@
             socket.onclose = function(event){
                 var content = document.getElementById("res");
                 content.value = "连接关闭了";
+                logout();
             }
 
         }
