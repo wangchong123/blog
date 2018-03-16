@@ -50,4 +50,11 @@ public class CommonUtil {
     public static <e> List<e> function (List <e> list) {
         return new ArrayList<e>(new LinkedHashSet<e>(list));
     }
+
+
+    public static void main(String[] args) {
+        Integer f1 = 100, f2 = 100, f3 = 150, f4 = 150;
+        System.out.println(f1 == f2);
+        System.out.println(f3 == f4);
+    }
 }
