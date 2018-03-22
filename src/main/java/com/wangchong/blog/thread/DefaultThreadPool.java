@@ -1,12 +1,12 @@
 package com.wangchong.blog.thread;
 
 
-import javax.validation.constraints.Min;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> {
 
@@ -74,12 +74,10 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> 
 
     @Override
     public void removeWorkers(int num) {
-
         synchronized (jobs){
             if(num >= this.workerNum){
                 throw new IllegalArgumentException("beyond workerNum");
             }
-
             int count = 0;
             while (count < num){
                 Worker worker = workers.get(count);
@@ -89,9 +87,7 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> 
                 }
             }
             this.workerNum -=count;
-
         }
-
     }
 
     @Override
@@ -141,4 +137,25 @@ public class DefaultThreadPool<Job extends Runnable> implements ThreadPool<Job> 
             running = false;
         }
     }
+
+
+    public static void main(String[] args) {
+
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                System.out.println(1);
+            }
+        };
+        thread.start();
+
+        thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
+
+    }
+
 }
