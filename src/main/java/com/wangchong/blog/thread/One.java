@@ -47,7 +47,7 @@ public class One {
     public static void main(String[] args) {
         while(true){
             if(Thread.currentThread().isInterrupted()){
-                //被中断是的操作，如：终止线程等
+                //被中断时候的操作，如：终止线程等
 
             }else{
                 //do something...
